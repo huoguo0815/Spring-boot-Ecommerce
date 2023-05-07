@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>購物平台</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header>
+  <h1>購物平台</h1>
+</header>
+
+<main>
+  <section id="add-product">
+    <h2>新增產品</h2>
+    <form>
+      <label for="product-id">商品編號：</label>
+      <input type="text" id="product-id" name="product-id"><br>
+
+      <label for="product-name">商品名稱：</label>
+      <input type="text" id="product-name" name="product-name"><br>
+
+      <label for="product-price">售價：</label>
+      <input type="text" id="product-price" name="product-price"><br>
+
+      <label for="product-stock">庫存：</label>
+      <input type="text" id="product-stock" name="product-stock"><br>
+
+      <button type="submit">新增</button>
+    </form>
+  </section>
+
+  <section id="product-list">
+    <h2>產品列表</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>商品編號</th>
+        <th>商品名稱</th>
+        <th>售價</th>
+        <th>庫存</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>001</td>
+        <td>商品1</td>
+        <td>$100</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td>002</td>
+        <td>商品2</td>
+        <td>$200</td>
+        <td>5</td>
+      </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="cart">
+    <h2>購物車</h2>
+    <table>
+      <thead>
+      <tr>
+        <th>商品名稱</th>
+        <th>單價</th>
+        <th>數量</th>
+        <th>小計</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>商品1</td>
+        <td>$100</td>
+        <td>2</td>
+        <td>$200</td>
+      </tr>
+      <tr>
+        <td>商品2</td>
+        <td>$200</td>
+        <td>1</td>
+        <td>$200</td>
+      </tr>
+      </tbody>
+    </table>
+    <p>總金額：$400</p>
+    <button>結帳</button>
+  </section>
+</main>
+
+<footer>
+  <p>版權所有 © 2023 購物平台</p>
+</footer>
+</body>
+</html>

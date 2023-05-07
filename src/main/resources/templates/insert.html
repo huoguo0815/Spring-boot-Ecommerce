@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>購物平台</title>
+  <!-- 引入 Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div id="app">
+  <!添加產品>
+
+  <div class="container">
+    <!-- 顯示新增商品的彈出視窗 -->
+    <div v-if="showAddProductModal">
+      <h2>新增商品</h2>
+      <form @submit.prevent="addProduct">
+        <div>
+          <label>商品名稱：</label>
+          <input v-model="productName" required>
+        </div>
+        <div>
+          <label>售價：</label>
+          <input type="number" v-model="productPrice" required>
+        </div>
+        <div>
+          <label>庫存：</label>
+          <input type="number" v-model="productStock" required>
+        </div>
+        <button type="submit">新增</button>
+        <button type="button" @click="hideAddProductModal">取消</button>
+      </form>
+    </div>
+
+  <!-- 商品列表 -->
+  <div class="container">
+    <h2>商品列表</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>商品編號</th>
+        <th>商品名稱</th>
+        <th>售價</th>
+        <th>庫存</th>
+        <th>購買數量</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(product, index) in productList">
+        <td>{{ product.id }}</td>
+        <td>{{ product.productname }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.Quantity }}</td>
+        <td>
+          <input type="number" v-model="product.quantity" min="1" :max="product.Quantity">
+        </td>
+        <td>
+          <button class="btn btn-primary" @click="addToCart(index)">加入購物車</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 購物車 -->
+  <div class="container">
+    <h2>購物車</h2>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>商品編號</th>
+        <th>商品名稱</th>
+        <th>售價</th>
+        <th>數量</th>
+        <th>小計</th>
+        <th>操作</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(cartItem, index) in cartItems">
+        <td>{{ cartItem.id }}</td>
+        <td>{{ cartItem.productname }}</td>
+        <td>{{ cartItem.price }}</td>
+        <td>{{ cartItem.quantity }}</td>
+        <td>{{ cartItem.price * cartItem.quantity }}</td>
+        <td>
+          <button class="btn btn-danger" @click="removeFromCart(index)">刪除</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="4">總金額：</td>
+        <td>{{ totalPrice }}</td>
+        <td>
+          <button class="btn btn-primary" @click="checkout">結帳</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<!-- 引入 Vue.js -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      productList: [
+        {id: 1, name: '商品A', price: 100, stock: 10, quantity: 1}]
+    }
+  })
+  export default {
+    // 略去其他內容
+    data() {
+      return {
+        showAddProductModal: false,
+        productName: '',
+        productPrice: 0,
+        productStock: 0
+      };
+    },
+    methods: {
+      showAddProductModal() {
+        this.showAddProductModal = true;
+      },
+      hideAddProductModal() {
+        this.showAddProductModal = false;
+      },
+      async addProduct() {
+        try {
+          const response = await fetch('/api/products', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              name: this.productName,
+              price: this.productPrice,
+              stock: this.productStock
+            })
+          });
+          const data = await response.json();
+          console.log(data);
+          this.hideAddProductModal();
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    }
+  };
+</script>

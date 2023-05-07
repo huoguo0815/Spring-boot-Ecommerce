@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>購物平台作業</title>
+</head>
+<body>
+  <form method="post" action="/test" th:object="${Product}">
+    <input type="text" id="productname" name="productname" placeholder="商品名稱" th:field="*{productname}"/>
+    <input type="number" id="productprice" name="price" placeholder="價格" th:field="*{price}">
+    <input type="number" id="productquantity" name="quantity" placeholder="庫存" th:field="*{quantity}">
+    <button type="submit">新增</button>
+  </form>
+</body>
+</html>
